@@ -6,14 +6,20 @@ import datetime
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("expID")
-parser.add_argument("subID")
-parser.add_argument("--CHILD")
-parser.add_argument("--PARENT")
+parser.add_argument("expID", type=int)
+parser.add_argument("subID", type=str)
+parser.add_argument("--CHILD", type=bool)
+parser.add_argument("--PARENT", type=bool)
+parser.add_argument("--RM", type=bool)
+
 
 args = parser.parse_args()
 
 model = RetinaFace.detect_faces
+
+def save_log(expid, subject):
+     with open (r"C:\Users\multimaster\Documents\RetinaFace_doc\metadata\prediction-log.txt", "a") as file:
+            file.write(f"{expid} {subject} {datetime.datetime.now()}\n")
 
 def predict_exp(INPATH, expid, PARENT=False, CHILD=True):
     INPATH = Path(INPATH)
@@ -23,24 +29,25 @@ def predict_exp(INPATH, expid, PARENT=False, CHILD=True):
 
     for subject in subjects:
         predict_dyad(INPATH, subject, CHILD, PARENT)
-        
-        with open (r"C:\Users\multimaster\Documents\RetinaFace_doc\metadata\prediction-log.txt", "a") as file:
-            file.write(f"{expid} {subject} {datetime.datetime.now()}\n")
+        save_log(expid, subject)
         count+=1
 
-def predict_dyad(INPATH, subject, CHILD=False, PARENT=False):
+def predict_dyad(INPATH, subject, CHILD, PARENT, RM):
     REL_INPATH = INPATH / subject 
-     
+    
+    print(f'Predicting subject: {subject}')
     if PARENT:
-        predict_subject(REL_INPATH,  "parent")
+        result = predict_subject(REL_INPATH,  "parent", RM)
      
     if CHILD:
-        predict_subject(REL_INPATH, "child")
+        result =predict_subject(REL_INPATH, "child", RM)
 
-    print(f"SUCCESS {subject} {datetime.datetime.now()}\n")
+    if result:
+        save_log(351, subject)
+        print(f"SUCCESS {subject} {datetime.datetime.now()}\n")
    
 
-def predict_subject(REL_INPATH, agent = "child",):
+def predict_subject(REL_INPATH, agent = "child", RM=False):
     if agent == "child":
         INPATH_FM = REL_INPATH / "cam07_frames_p"
     elif agent == "parent":
@@ -48,11 +55,14 @@ def predict_subject(REL_INPATH, agent = "child",):
 
     if not os.path.exists(INPATH_FM):
         print("subject has no FOV frame folder")
-        return 
+        return False
 
     OUTPATH = REL_INPATH / "supporting_files" / f"bbox_annotations_{agent}_face"
     os.makedirs(OUTPATH, exist_ok=True)
 
+    if RM:
+        basic_utils.remove_dir(OUTPATH)
+    
     try:
         basic_utils.predict_dir(INPATH_FM, OUTPATH, model)
     except Exception as e:
@@ -71,6 +81,12 @@ def main():
         PARENT = args.PARENT
     else:
         PARENT = False
-    predict_dyad(IN_PATH, args.subID, CHILD, PARENT)
+
+    if args.RM is not None:
+        RM = args.RM
+    else:
+        RM = False
+
+    predict_dyad(IN_PATH, args.subID, CHILD, PARENT, RM)
     
 main()

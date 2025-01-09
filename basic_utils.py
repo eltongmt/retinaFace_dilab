@@ -67,3 +67,12 @@ def predict_dir(INDIR, OUTDIR, model):
         bbox = get_bb(model, R_INF)
 
         write_txt(bbox, R_OUTF)
+
+# utility to remove files in order to predict 
+def remove_dir(INDIR):
+    files = os.listdir(INDIR)
+
+    for f in tqdm(files, desc="deleting files"):
+        relative_frame = INDIR / f
+        os.remove(relative_frame)
+        
