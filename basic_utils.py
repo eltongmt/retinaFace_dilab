@@ -18,12 +18,14 @@ def get_bb(model, img):
     return 0
 
 # write annotation
-def write_txt(bbox, OUTDIR):
+def write_txt(bbox, OUTDIR, error=False):
 
     with open(OUTDIR, "w") as file:
         if bbox:
             bbox.insert(0, 0)
             file.write(" ".join(map(str, bbox)))
+        elif error:
+            file.write("An error occured durring prediction")
         else:
             file.write("")
 
@@ -47,8 +49,8 @@ def draw_bbox(bbox, img, color=(255,0,0),font_size=1,line_width=1 ):
 
 # predict img
 def predict_img(OUTDIR, model, img):
-    bbox = get_bb(model. img)
-
+    bbox = get_bb(model, img)
+    
     write_txt(bbox, OUTDIR)
     return draw_bbox(bbox, img)
 
@@ -63,10 +65,12 @@ def predict_dir(INDIR, OUTDIR, model):
         
         R_INF= os.path.join(INDIR, file)
         R_OUTF = os.path.join(OUTDIR,f"{file[:-4]}.txt")
-        
-        bbox = get_bb(model, R_INF)
+        try:
+            bbox = get_bb(model, R_INF)
+            write_txt(bbox, R_OUTF)
+        except:
+            write_txt([], R_OUTF, True)
 
-        write_txt(bbox, R_OUTF)
 
 # utility to remove files in order to predict 
 def remove_dir(INDIR):
