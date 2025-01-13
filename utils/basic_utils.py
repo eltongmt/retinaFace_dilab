@@ -6,6 +6,7 @@ from tqdm import tqdm
 
 # get_bb
 def get_bb(model, img):
+    ## outputs x1,y1,x2,y2,conf (non mormalized in pixel values)
     preds = model(img)
     try:
         bbox = [val for val in preds["face_1"]["facial_area"]]
@@ -16,6 +17,7 @@ def get_bb(model, img):
         pass
 
     return 0
+
 
 # write annotation
 def write_txt(bbox, OUTDIR, error=False):
@@ -28,6 +30,7 @@ def write_txt(bbox, OUTDIR, error=False):
             file.write("An error occured durring prediction")
         else:
             file.write("")
+
 
 # draw bbox 
 def draw_bbox(bbox, img, color=(255,0,0),font_size=1,line_width=1 ):
@@ -47,12 +50,6 @@ def draw_bbox(bbox, img, color=(255,0,0),font_size=1,line_width=1 ):
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,255,255), 1)
     return img
 
-# predict img
-def predict_img(OUTDIR, model, img):
-    bbox = get_bb(model, img)
-    
-    write_txt(bbox, OUTDIR)
-    return draw_bbox(bbox, img)
 
 # predict dir 
 def predict_dir(INDIR, OUTDIR, model):
@@ -79,4 +76,42 @@ def remove_dir(INDIR):
     for f in tqdm(files, desc="deleting files"):
         relative_frame = INDIR / f
         os.remove(relative_frame)
+
+
+def normalize_im(bbox, shape):
+    # for variables we follow the yolo format
+    # x_center, y_center, width, height, conf
+    # and normalized coordinates from 0-1
+    conf = bbox[-1]
+    bbox  = bbox[:5]
+
+    yolo_width = abs(bbox[2] - bbox[0]) 
+    x_center = (bbox[0] + (yolo_width / 2))
+    yolo_height = abs(bbox[3] - bbox[1])
+    y_center = (bbox[1] + (yolo_height / 2))
+
+    return list((x_center / shape[1], y_center / shape[0], 
+                yolo_width/ shape[1], yolo_height/ shape[0], conf))
         
+
+def normalize_dir(INPATH_FM, OUTPATH):
+    frame = INPATH_FM / 'img_1.jpg'
+    im = cv2.imread(INPATH_FM / frame)
+    shape = im.shape[:2]
+
+    preds = os.listdir(OUTPATH)
+    for pred in tqdm(preds, desc="Normalizing Annotations.."):
+        relative_pred = OUTPATH / pred
+        file_size = os.path.getsize(relative_pred)
+
+        if file_size != 0:
+            with open(relative_pred) as f:
+                data = f.readlines()
+            for i in data:
+                bbox_list = i.split(" ")
+                bbox = [int(j) for j in bbox_list[1:5]]
+                conf = float(bbox_list[-1])
+                bbox.append(conf)
+                nbbox = normalize_im(bbox, shape)
+                write_txt(nbbox, relative_pred)
+                    
