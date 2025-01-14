@@ -49,14 +49,14 @@ VIDEO=0
 
 if ($many); then
     while read line;  do
-        if ($pre); then
-            conda activate tf_test
-            python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --PRED "$PRED" --NORM "$NORM" --RM "$RM" --pre "$pre" --post "$post"
+        if [ "$pre" -eq 1 ]; then
+            conda activate tf
+            python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --PRED "$PRED" --NORM "$NORM" --RM "$RM" --pre "$pre" 
             conda deaYctivate
         fi
-        if ($post); then
+        if [ "$post" -eq 1] ; then
             source "$yolovm_path"
-            python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --SMOOTH "$SMOOTH" --VIDEO "$VIDEO" --pre "$pre" --post "$post"
+            python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --SMOOTH "$SMOOTH" --VIDEO "$VIDEO" --post "$post"
             deactivate 
         fi
         #FOR DEGUGGING echo "$line" >> metadata/final_list.txt
