@@ -54,7 +54,7 @@ if ($many); then
             python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --PRED "$PRED" --NORM "$NORM" --RM "$RM" --pre "$pre" 
             conda deaYctivate
         fi
-        if [ "$post" -eq 1] ; then
+        if [ "$post" -eq 1 ] ; then
             source "$yolovm_path"
             python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --SMOOTH "$SMOOTH" --VIDEO "$VIDEO" --post "$post"
             deactivate 
