@@ -72,6 +72,7 @@ def predict_subject(expID, subID, REL_INPATH, agent, PRED, RM, NORM, SMOOTH, VID
         proccess_subject(expID, subID, INPATH_FM, OUTPATH, PRED, RM, NORM)
     elif post:
         AN_PATH = REL_INPATH / "supporting_files" / f"bbox_annotations_{agent}_face"
+        OUTPATH = REL_INPATH / "supporting_files" / f"bbox_video_{agent}_face"
         postProcess_subject(expID, subID, INPATH_FM, OUTPATH, AN_PATH, SMOOTH, VIDEO)
 
 def proccess_subject(expID, subID, INPATH_FM, OUTPATH, PRED, RM, NORM): 
