@@ -7,11 +7,11 @@ source C:\\Users\\multimaster\\anaconda3\\etc\\profile.d\\conda.sh
 conda activate tf 
 
 if ($one); then
-    python C:\\Users\\multimaster\\Documents\\RetinaFace_doc\\exp_utils.py "$expID" "$subID" --RM true
+    python C:\\Users\\multimaster\\Documents\\retinaFace_dilab\\exp_utils.py "$expID" "$subID" --RM true
 else
     while read line; do 
-        python C:\\Users\\multimaster\\Documents\\RetinaFace_doc\\exp_utils.py "$expID" "$line" --RM true
-    done < metadata/comp1.txt
+        python C:\\Users\\multimaster\\Documents\\retinaFace_dilab\\exp_utils.py "$expID" "$line" --RM true
+    done < metadata/comp2.txt
 fi
 
 conda deactivate 

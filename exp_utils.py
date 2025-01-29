@@ -52,7 +52,7 @@ def predict_subject(REL_INPATH, agent = "child", RM=False):
         INPATH_FM = REL_INPATH / "cam07_frames_p"
     elif agent == "parent":
         INPATH_FM = REL_INPATH / "cam08_frames_p"
-
+    
     if not os.path.exists(INPATH_FM):
         print("subject has no FOV frame folder")
         return False
@@ -86,7 +86,6 @@ def main():
         RM = args.RM
     else:
         RM = False
-
     predict_dyad(IN_PATH, args.subID, CHILD, PARENT, RM)
     
 main()
