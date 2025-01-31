@@ -5,3 +5,6 @@ To run
 4. Install retina-face, pip install retina-face  
 
 Some scripts have fixed paths, most should work for all lab computers but make sure to check
+
+NOTE data.py in YOLO-Object-Detection-project has been update, this 
+repo will not work with the old version need to push to git
