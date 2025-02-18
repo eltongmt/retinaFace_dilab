@@ -1,7 +1,7 @@
 
 #path constants
 conda_path="C:\\Users\\multimaster\\anaconda3\\etc\\profile.d\\conda.sh"
-yolovm_path="C:\\Users\\multimaster\\Documents\\GitHub\\YOLO-Object-Detection-Project\\YOLO-Object-Detection-Project\\venv\\Scripts\\activate"
+yolovm_path="C:\\Users\\multimaster\\documents\\YOLO-Object-Detection-Project\\.venv\\Scripts\\activate"
 retinaPython="C:\\Users\\multimaster\\Documents\\retinaFace_dilab\\utils\\exp_utils.py"
 yoloPython="C:\\Users\\multimaster\\Documents\\GitHub\\YOLO-face_detection\\scripts\\drawing_scripts\\post_processing_utils.py"
 source "$conda_path"

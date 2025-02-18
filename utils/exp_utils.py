@@ -1,6 +1,3 @@
-import sys
-# not optimal lol, maybe can make it a package? 
-sys.path.append(r"C:\Users\multimaster\Documents\GitHub\YOLO-face_detection")
 import basic_utils as basic_utils
 import os
 from pathlib import Path
@@ -34,7 +31,7 @@ if args.pre:
     model = RetinaFace.detect_faces
 elif args.post:
     from obj_detector.data import DataMaster
-    datamaster = DataMaster("")
+    datamaster = DataMaster("", class_dict={0:"face"}, color_dict={0:"rgb(255, 57, 58)"})
 
 def save_log(expID, subID, type):
      with open (r"C:\Users\multimaster\Documents\retinaFace_dilab\metadata\prediction-log.txt", "a") as file:
