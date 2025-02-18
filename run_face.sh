@@ -14,12 +14,12 @@ source "$conda_path"
 #   to predict multiple subjects set the many argument to true and provide the path to a .txt file with a the subjects
 #   an example can be found under metadata/distributed_processing/comp1.txt
 #                        
-expID=12
+expID=91
 many=false
 CHILD=1
 PARENT=0
 
-subID="__20160929_17402"
+subID="__20161130_9101"
 subList="metadata/test_postprocessing.txt"
 
 ## PREDICTION ARGUMENTS  ##
