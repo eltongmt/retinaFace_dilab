@@ -14,13 +14,13 @@ source "$conda_path"
 #   to predict multiple subjects set the many argument to true and provide the path to a .txt file with a the subjects
 #   an example can be found under metadata/distributed_processing/comp1.txt
 #                        
-expID=12
-many=false
+expID=351
+many=true
 CHILD=1
 PARENT=0
 
-subID="__20160929_17402"
-subList="metadata/test_postprocessing.txt"
+subID="__20221112_10041"
+subList="metadata/test_subs.txt"
 
 ## PREDICTION ARGUMENTS  ##
 
@@ -33,16 +33,16 @@ pre=1
 post=1
 
 # To create face predictions set the PRED argument to 1
-PRED=1
+PRED=0
 # To normalize existing face predictions set the NORM argument to 1
-NORM=1
+NORM=0
 # In case a subjects face predictions need be re run one must remove the existing predictions
 # this can be done by setting RM to 1
-RM=1
+RM=0
 # To smooth predictions set SMOOTH to 1
-SMOOTH=1
+SMOOTH=0
 # To create a video with predictions set VIDEO to 1
-VIDEO=1
+VIDEO=0
 
 # The actions above can all be performed during one run, so for a new subject all the flags except 
 # RM will be true. The actions are performed in the following order RM -> PRED -> NORM -> SMOOTH -> VIDEO 
@@ -52,7 +52,7 @@ if ($many); then
         if [ "$pre" -eq 1 ]; then
             conda activate tf
             python "$retinaPython" "$expID" "$line" --CHILD "$CHILD" --PARENT "$PARENT" --PRED "$PRED" --NORM "$NORM" --RM "$RM" --pre "$pre" 
-            conda deaYctivate
+            conda deactivate
         fi
         if [ "$post" -eq 1 ] ; then
             source "$yolovm_path"
