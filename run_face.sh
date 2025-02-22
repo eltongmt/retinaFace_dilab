@@ -48,7 +48,7 @@ VIDEO=1
 # RM will be true. The actions are performed in the following order RM -> PRED -> NORM -> SMOOTH -> VIDEO 
 
 if ($many); then
-    dos2unitx "$subList"
+    dos2unix "$subList"
 
     while read line;  do
         if [ "$pre" -eq 1 ]; then
