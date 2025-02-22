@@ -14,13 +14,13 @@ source "$conda_path"
 #   to predict multiple subjects set the many argument to true and provide the path to a .txt file with a the subjects
 #   an example can be found under metadata/distributed_processing/comp1.txt
 #                        
-expID=351
+expID=27
 many=true
 CHILD=1
 PARENT=0
 
-subID="__20221112_10041"
-subList="metadata/test_subs.txt"
+subID="__20170213_17303"
+subList="metadata/exp27.txt"
 
 ## PREDICTION ARGUMENTS  ##
 
@@ -33,21 +33,23 @@ pre=1
 post=1
 
 # To create face predictions set the PRED argument to 1
-PRED=0
+PRED=1
 # To normalize existing face predictions set the NORM argument to 1
-NORM=0
+NORM=1
 # In case a subjects face predictions need be re run one must remove the existing predictions
 # this can be done by setting RM to 1
 RM=0
 # To smooth predictions set SMOOTH to 1
-SMOOTH=0
+SMOOTH=1
 # To create a video with predictions set VIDEO to 1
-VIDEO=0
+VIDEO=1
 
 # The actions above can all be performed during one run, so for a new subject all the flags except 
 # RM will be true. The actions are performed in the following order RM -> PRED -> NORM -> SMOOTH -> VIDEO 
 
 if ($many); then
+    dos2unitx "$subList"
+
     while read line;  do
         if [ "$pre" -eq 1 ]; then
             conda activate tf
