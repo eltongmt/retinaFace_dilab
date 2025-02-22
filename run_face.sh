@@ -1,7 +1,7 @@
 
 #path constants
 conda_path="C:\\Users\\multimaster\\anaconda3\\etc\\profile.d\\conda.sh"
-yolovm_path="C:\\Users\\multimaster\\Documents\\GitHub\\YOLO-Object-Detection-Project\\YOLO-Object-Detection-Project\\venv\\Scripts\\activate"
+yolovm_path="C:\\Users\\multimaster\\documents\\YOLO-Object-Detection-Project\\venv\\Scripts\\activate"
 retinaPython="C:\\Users\\multimaster\\Documents\\retinaFace_dilab\\utils\\exp_utils.py"
 yoloPython="C:\\Users\\multimaster\\Documents\\GitHub\\YOLO-face_detection\\scripts\\drawing_scripts\\post_processing_utils.py"
 source "$conda_path"
@@ -14,12 +14,12 @@ source "$conda_path"
 #   to predict multiple subjects set the many argument to true and provide the path to a .txt file with a the subjects
 #   an example can be found under metadata/distributed_processing/comp1.txt
 #                        
-expID=91
+expID=12
 many=false
 CHILD=1
 PARENT=0
 
-subID="__20161130_9101"
+subID="__20160929_17402"
 subList="metadata/test_postprocessing.txt"
 
 ## PREDICTION ARGUMENTS  ##
